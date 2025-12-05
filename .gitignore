@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual env
+venv/
+.venv/
+env/
+ENV/
+
+# Environment
+.env
+.env.*
+
+# Build / Dist
+build/
+dist/
+*.egg-info/
+
+# Caches & Logs
+.mypy_cache/
+.pytest_cache/
+.coverage*
+htmlcov/
+logs/
+*.log
+.cache/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Project data
+# vector_store_here/
+vector_store/
+faiss_index/
+chroma_db/
+uploads/
+temp_files/
+
+# HuggingFace cache (可按需注释)
+hf_cache/
+.huggingface/
+
+
