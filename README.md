@@ -8,7 +8,7 @@
 - 📄 **RAG 检索问答**：支持 PDF/TXT/MD 文档加载、切分、向量化（FAISS），基于私有知识库精准回答。
 - 🧠 **LLM 工厂**：统一的 LLM 初始化与单例管理（支持自定义 temperature / model）。
 - 🔎 **向量存储**：FAISS 本地向量库，支持保存/加载、相似度搜索与得分返回。
-- 🛡️ **安全防护**：基础的提示注入检测与输入清洗（待按需扩展）。
+- 🛡️ **安全防护**：设计并实现了应用层安全护栏模块，对用户 Query 进行启发式安全检测（Prompt Injection、System Prompt Exfiltration、危险命令注入等），采用规则分级 + 风险聚合的方式输出结构化安全结果，并通过日志系统记录安全事件，可作为后续审计与风控策略的基础
 - 🧰 **Agent 工具**：可扩展工具调用（搜索、计算等），支持 LangChain Agent 流程。
 - 🖥️ **API + UI**：FastAPI 提供接口，Streamlit 提供简易 Web UI。
 - 🐳 **容器化**：可通过 Docker / Compose 部署。
