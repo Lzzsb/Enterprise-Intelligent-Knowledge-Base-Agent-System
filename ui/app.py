@@ -3,6 +3,8 @@
 import streamlit as st
 import requests
 import json
+import os
+from dotenv import load_dotenv
 
 # 设置页面标题
 st.set_page_config(page_title="企业级智能知识库助手", page_icon="🤖")
@@ -31,8 +33,9 @@ if prompt := st.chat_input("请输入您的问题..."):
         message_placeholder.markdown("⏳ 思考中...")  # 显示加载状态
 
         try:
-            # 这里的 URL 是你 FastAPI 的地址
-            api_url = "http://127.0.0.1:8000/api/v1/chat"
+            # 从环境变量读取API_URL 如果没有则使用默认值
+            api_url = os.getenv("API_URL", "http://127.0.0.1:8000/api/v1/chat")
+
             payload = {"query": prompt, "use_search": False}
 
             # 发送请求

@@ -49,11 +49,14 @@ pip install -r requirements.txt
 ---
 
 ## ⚙️ 环境变量（.env）
-复制 `.env.example` 到 `.env` 并填写：
+复制 `.env.example` 到 `.env` 并填写（至少以下三项）：
 ```
-LLM_API_BASE=https://api.deepseek.com/v1
 LLM_API_KEY=your_api_key_here
+LLM_API_BASE_URL=https://api.deepseek.com
 LLM_MODEL_NAME=deepseek-chat
+# 可选：LLM_TEMPERATURE=0.7
+# 可选：VECTOR_STORE_PATH=./vector_store_here
+```
 
 ---
 
@@ -97,14 +100,27 @@ python app/core/misc/test_llm_factory.py
 
 ---
 
-## 📦 Docker（可选）
-如需容器化，可根据需要编写 `Dockerfile` 与 `docker-compose.yml`。建议包含：
-- 后端镜像（FastAPI + 依赖）
-- 前端镜像（Streamlit）
-- 挂载 `.env` 与持久化向量库目录
+## 📦 Docker 部署
+- 前置：准备 `.env`（包含 LLM_API_KEY / LLM_API_BASE_URL / LLM_MODEL_NAME），确认本机 8000、8501 端口空闲。
+- 构建并启动（后台运行）：
+```bash
+docker compose up --build -d   # 后台运行
+```
+- 访问：
+  - API: `http://localhost:8000`（Swagger: `/docs`）
+  - Web UI: `http://localhost:8501`
+- 日志与状态：
+```bash
+docker compose ps
+docker compose logs -f api
+docker compose logs -f web
+```
+- 停止并清理容器（保留向量库等挂载数据）：
+```bash
+docker compose down
+```
 
 ---
 
 ## 📄 开源许可
 本项目默认 MIT License（如有需要可自行调整）。
-

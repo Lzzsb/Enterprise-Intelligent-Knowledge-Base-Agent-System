@@ -5,6 +5,7 @@
 
 from pydantic_settings import BaseSettings
 from typing import Optional
+import torch
 
 
 class Settings(BaseSettings):
@@ -26,7 +27,7 @@ class Settings(BaseSettings):
 
     # === 嵌入模型配置 ===
     EMBEDDING_MODEL_NAME: str = "BAAI/bge-m3"  # 1024维向量
-    EMBEDDING_DEVICE: str = "cuda"  # 这里使用cuda 速度更快
+    EMBEDDING_DEVICE: str = "cuda" if torch.cuda.is_available() else "cpu"
 
     # === 向量数据库配置 ===
     # VECTOR_STORE_TYPE: str = "faiss"

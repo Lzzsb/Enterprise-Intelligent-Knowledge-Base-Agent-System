@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env
+__pycache__
+*.pyc
+.venv
+.pytest_cache
+README.md
+docker-compose.yml
+Dockerfile
+# ui/ 单镜像模式需要执行ui
+tests/
+data/

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # 后端服务
+  api:
+    build: . # 使用本地目录的docker file 构建
+    # command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    # 这里不写command因为Dockerfile中已经写了默认命令
+    ports:
+      - "8000:8000" # 宿主机 8000 → 容器内 8000
+    volumes:
+      - .:/app # 挂载目录
+    env_file:
+      - .env
+    environment:
+      - LLM_API_KEY=${LLM_API_KEY} # deepseek
+      - LLM_API_BASE_URL=${LLM_API_BASE_URL}
+      - LLM_MODEL_NAME=${LLM_MODEL_NAME}
+    networks:
+      - ai-network # 把api容器加载到ai-network网络中
+
+  # 前端服务
+  web:
+    build: .
+    # 这里需要覆盖command
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501" # 宿主机 8501 → 容器内 8501
+    volumes:
+      - .:/app
+    environment:
+      # 给web容器定义环境变量 在执行app.py时 里面的os.getenv("API_URL")会读取这个环境变量
+      - API_URL=http://api:8000/api/v1/chat
+    depends_on:
+      - api # 等后端启动了再启动前端
+    networks:
+      - ai-network
+
+networks:
+  ai-network:
+    driver: bridge
